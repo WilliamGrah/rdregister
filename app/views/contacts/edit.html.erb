@@ -1,0 +1,32 @@
+<h1>Edit Contact</h1>
+<br />
+
+<div class="table" style="padding-left:10px">
+	<%= form_for :contact, url: contact_path(@contact), method: :patch do |c| %>
+	<p>
+		<%= c.label :nome %><br />
+		<%= c.text_field :name %>
+	</p>
+	<p>
+		<%= c.label :email %><br />
+		<%= c.text_field :email %>
+	</p>
+	<p>
+		<%= c.label :idade %><br />
+		<%= c.text_field :age %>
+	</p>
+	<p>
+		<%= c.label :estado %><br />
+		<%= c.text_field :state %>
+	</p>
+	<p>
+		<%= c.label :cargo %><br />
+		<%= c.text_field :job %>
+	</p>
+	<p>
+		<%= c.submit "Save", class: "btn btn-primary" %>
+	</p>
+	<% end %>
+</div>
+
+<%= link_to "Back", contact_path %><br />

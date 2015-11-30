@@ -1,22 +1,31 @@
 <h1>List of Contacts</h1>
 <%= link_to "New contact", root_path %><br />
 <br />
-<table>
-	<tr>
-		<td>Name</td>
-		<td>Email</td>
-		<td>Age</td>
-		<td>State</td>
-		<td>Job</td>
-	</tr>
-	<% @contacts.each do |contact| %>
-	<tr>
-		<td><%= contact.name %></td>
-		<td><%= contact.email %></td>
-		<td><%= contact.age %></td>
-		<td><%= contact.state %></td>
-		<td><%= contact.job %></td>
-		<td><%= link_to "Delete", contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-	</tr>
-	<% end %>
-</table>
+
+<div class="table" style="width: 40%; float:left">
+	<table class="table table-striped">
+		<tr>
+			<td><strong>Name</strong></td>
+			<td><strong>Email</strong></td>
+			<td><strong>Age</strong></td>
+			<td><strong>State</strong></td>
+			<td><strong>Job</strong></td>
+			<td><strong>Options</strong></td>
+		</tr>
+		<% @contacts.each do |contact| %>
+		<tr>
+			<td><%= contact.name %></td>
+			<td><%= contact.email %></td>
+			<td><%= contact.age %></td>
+			<td><%= contact.state %></td>
+			<td><%= contact.job %></td>
+			<td><%= link_to "Edit", edit_contact_path(contact) %> |
+			<%= link_to "Delete", contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+
+<div style="width: 40%;float:right">
+
+</div>
