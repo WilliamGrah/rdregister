@@ -2,45 +2,47 @@
 <%= link_to "New contact", root_path %><br />
 <br />
 
-<div class="table" style="width: 40%; float:left">
-	<table id="hide" class="table table-striped">
-		<tr>
-			<td><strong>Name</strong></td>
-			<td><strong>Email</strong></td>
-			<td><strong>Age</strong></td>
-			<td><strong>State</strong></td>
-			<td><strong>Job</strong></td>
-			<td><strong>Options</strong></td>
-		</tr>
-		<% @contacts.each do |contact| %>
-		<tr>
-			<td><%= contact.name %></td>
-			<td><%= contact.email %></td>
-			<td><%= contact.age %></td>
-			<td><%= contact.state %></td>
-			<td><%= contact.job %></td>
-			<td><%= link_to "Edit", edit_contact_path(contact) %> |
-			<%= link_to "Delete", contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-		</tr>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-8">
+		<table id="hide" class="table table-striped">
+			<tr>
+				<td><strong>Name</strong></td>
+				<td><strong>Email</strong></td>
+				<td><strong>Age</strong></td>
+				<td><strong>State</strong></td>
+				<td><strong>Job</strong></td>
+				<td><strong>Options</strong></td>
+			</tr>
+			<% @contacts.each do |contact| %>
+			<tr>
+				<td><%= contact.name %></td>
+				<td><%= contact.email %></td>
+				<td><%= contact.age %></td>
+				<td><%= contact.state %></td>
+				<td><%= contact.job %></td>
+				<td><%= link_to "Edit", edit_contact_path(contact) %> |
+				<%= link_to "Delete", contact_path(contact), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+			</tr>
 		<% end %>
-	</table>
-</div>
-
-<div style="width: 40%;float:right">
-<%= link_to "Search", "#", id: "search" %> | 
-<%= link_to "Clear Search", "/contacts" %>
-
-<%= form_for :filter do |filter| %>
-	<%= filter.label :idade %><br />
-	<%= select_tag(:age_filter, options_for_select([["igual a",0], ["maior que",1],["maior ou igual a",2],["menor que",3], ["menor ou igual a",4], ["entre", 5]])) %>
-	<%= filter.text_field :age, :id => "age" %>
-	<%= filter.label :e, id: "between", style:"display:none" %>
-	<%= filter.text_field :age, :id => "age2", style:"display:none" %><br />
-	<%= filter.label :estado %><br />
-	<%= filter.text_field :state, :id => "state" %><br />
-	<%= filter.label :cargo %><br />
-	<%= filter.text_field :job, :id => "job" %>
-<% end %>
+	</table> 	
+  </div>
+  <div class="col-xs-6 col-md-4">
+  <h3>Filter</h3>
+		<%= form_for :filter do |filter| %>
+			<%= filter.label :idade %><br />
+			<%= select_tag(:age_filter, options_for_select([["igual a",0], ["maior que",1],["maior ou igual a",2],["menor que",3], ["menor ou igual a",4], ["entre", 5]])) %>
+			<%= filter.text_field :age, :id => "age" %>
+			<%= filter.label :-, id: "between", style:"display:none" %>
+			<%= filter.text_field :age, :id => "age2", style:"display:none" %><br />
+			<%= filter.label :estado %><br />
+			<%= filter.text_field :state, :id => "state" %><br />
+			<%= filter.label :cargo %><br />
+			<%= filter.text_field :job, :id => "job" %>
+		<% end %>
+		<br />
+		<%= link_to "Filter", "#", id: "search", class: "btn btn-primary" %>
+		<%= link_to "Clear Filter", "/contacts", class: "btn btn-default" %>
+  </div>
 </div>
 
 <script>
