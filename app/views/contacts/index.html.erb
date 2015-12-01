@@ -3,7 +3,7 @@
 <br />
 
 <div class="table" style="width: 40%; float:left">
-	<table class="table table-striped">
+	<table id="hide" class="table table-striped">
 		<tr>
 			<td><strong>Name</strong></td>
 			<td><strong>Email</strong></td>
@@ -27,5 +27,54 @@
 </div>
 
 <div style="width: 40%;float:right">
+<%= link_to "Search", "#", id: "search" %> | 
+<%= link_to "Clear Search", "/contacts" %>
 
+<%= form_for :filter do |filter| %>
+	<%= filter.label :idade %><br />
+	<%= select_tag(:age_filter, options_for_select([["igual a",0], ["maior que",1],["maior ou igual a",2],["menor que",3], ["menor ou igual a",4], ["entre", 5]])) %>
+	<%= filter.text_field :age, :id => "age" %>
+	<%= filter.label :e, id: "between", style:"display:none" %>
+	<%= filter.text_field :age, :id => "age2", style:"display:none" %><br />
+	<%= filter.label :estado %><br />
+	<%= filter.text_field :state, :id => "state" %><br />
+	<%= filter.label :cargo %><br />
+	<%= filter.text_field :job, :id => "job" %>
+<% end %>
 </div>
+
+<script>
+	$("#search").click(function() {
+		var map = {}
+		if ($("#age").val() != "") {
+			map["age"] = $("#age").val();
+
+			map["age_filter"] = $("#age_filter").val();
+
+			if ($("#age_filter").val() == "5") {
+				map["age2"] = $("#age2").val();
+			}
+		}
+
+		if ($("#state").val() != "") {
+			map["state"] = $("#state").val();
+		}
+
+		if ($("#job").val() != "") {
+			map["job"] = $("#job").val();
+		}
+
+		var filter =JSON.stringify(map);
+		document.getElementById("search").href = "/contacts?filter="+encodeURIComponent(filter);
+	});
+
+	$("#age_filter").change(function() {
+		if ($("#age_filter").val() == "5") {
+			document.getElementById("between").style.display = "inline";
+			document.getElementById("age2").style.display = "inline";
+		} else {
+			document.getElementById("between").style.display = "none";
+			document.getElementById("age2").style.display = "none";
+		};
+	});
+</script>

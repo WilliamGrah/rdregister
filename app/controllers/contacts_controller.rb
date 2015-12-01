@@ -1,6 +1,20 @@
 class ContactsController < ApplicationController
 	def index
-		@contacts = Contact.all
+		filter = []
+		if params.has_key?("filter")
+			tmp = JSON.parse(params['filter'])
+
+			filter = FilterHelper.prepare_filter(tmp)
+
+			filter = filter.join(" #{tmp["operator"]} ")
+		end
+
+		if !filter.empty?
+			@contacts = Contact.where(filter)
+		else
+			@contacts = Contact.all
+		end
+
 	end
 
 	def show
@@ -38,6 +52,10 @@ class ContactsController < ApplicationController
 		@contact.destroy
 
 		redirect_to contacts_path
+	end
+
+	def filter
+		render json: {message: "Testando apenas"}
 	end
 
 	private
