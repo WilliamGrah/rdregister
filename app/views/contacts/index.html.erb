@@ -52,7 +52,7 @@
 		<input type="radio" name="operator", value="and" checked>E
 		<input type="radio" name="operator", value="or">OU
 		<br/>
-		<%= label_tag(:search) %>:<br />
+		<%= label_tag(:query) %>:<br />
 		<div id="filter_result">
 		</div><br />
 		<%= link_to "Idade", "#", id:"show_age_box",  class: "btn btn-default" %>
@@ -215,18 +215,21 @@
 		hide_all_filters();
 		document.getElementById("age_box").className = "inline";
 		document.getElementById("filter_actions").className = "inline";
+		document.getElementById("age").focus()
 	});
 
 	$("#show_state_box").click(function() {
 		hide_all_filters();
 		document.getElementById("state_box").className = "inline";
 		document.getElementById("filter_actions").className = "inline";
+		document.getElementById("state").focus()
 	});
 
 	$("#show_job_box").click(function() {
 		hide_all_filters();
 		document.getElementById("job_box").className = "inline";
 		document.getElementById("filter_actions").className = "inline";
+		document.getElementById("job").focus()
 	});
 
 	function hide_all_filters() {
