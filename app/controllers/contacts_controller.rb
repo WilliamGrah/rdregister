@@ -8,10 +8,10 @@ class ContactsController < ApplicationController
 			filter = params["query"]
 		end
 
-		if !filter.nil?
-			@contacts = Contact.where(filter)
-		else
+		if filter.nil?
 			@contacts = Contact.all
+		else
+			@contacts = Contact.where(filter)
 		end
 
 		@filter = Filter.new
