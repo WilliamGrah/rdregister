@@ -60,10 +60,8 @@
 		<%= link_to "Cargo", "#", id:"show_job_box", class: "btn btn-default" %>
 		<div id="age_box" class="hidden">
 			<%= label_tag(:idade) %><br />
-			<%= select_tag(:age_filter, options_for_select([["igual a",0], ["maior que",1],["maior ou igual a",2],["menor que",3], ["menor ou igual a",4], ["entre", 5]])) %>
+			<%= select_tag(:age_filter, options_for_select([["igual a",0], ["maior que",1],["maior ou igual a",2],["menor que",3], ["menor ou igual a",4]])) %>
 			<%= text_field_tag(:age, "", :id => "age") %>
-			<%= label_tag(:-, "", id: "between", style:"display:none") %>
-			<%= text_field_tag(:age2, "", :id => "age2", style:"display:none") %><br />
 		</div>
 		<div id="state_box" class="hidden">
 			<%= label_tag(:estado) %><br />
@@ -99,7 +97,7 @@
 	});
 
 	function timer_filter_list() {
-		filter_list_time = setInterval(reload_filter_list, 1000*3);
+		filter_list_time = setInterval(reload_filter_list, 1000*6);
 	}
 
 	function reload_filter_list() {
@@ -110,7 +108,6 @@
 			success: function(data){
 				parse = JSON.parse(data)
 				if (parse.length != filter_number) {
-					console.log("UPDATE!")
 					set_filter_list(parse);
 					filter_number = parse.length
 				}
@@ -128,11 +125,12 @@
 		for(var i = 0; i < data.length; i++) {
 			var id = data[i]['id']
 			var name = data[i]['name']
-			var query = data[i]['query'] 
+			var query = [data[i]['query']];
 			row = filter_table.insertRow(i);
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
-			cell1.innerHTML = "<a href='/contacts?query="+encodeURIComponent(query)+"'>"+name+"</a>"
+			
+			cell1.innerHTML = "<a href=\"/contacts?query="+encodeURIComponent(query)+"\">"+name+"</a>"
 			cell2_id = "filter_"+id
 			cell2.innerHTML = "<a href='#' id='"+cell2_id+"' style='margin-left:20px;' onClick><span class='remove-filter glyphicon glyphicon-remove'></span></a>"
 
@@ -150,7 +148,7 @@
 			url: url,
   			success: function(data){
   				reload_filter_list()
-  				success_msg("Filtro removido!")
+  				success_msg("Filtro removido")
   			},
   			error: function(e){
   				error_msg(e.responseText)
@@ -176,7 +174,7 @@
 			url: url,
   			data: data,
   			success: function(data){
-  				success_msg("Filtro criado!")
+  				success_msg("Filtro criado")
   			},
   			error: function(e){
   				error_msg(e.responseText)
@@ -212,16 +210,6 @@
 		$(this).tab('show')
 	});
 
-
-	$("#age_filter").change(function() {
-		if ($("#age_filter").val() == "5") {
-			document.getElementById("between").style.display = "inline";
-			document.getElementById("age2").style.display = "inline";
-		} else {
-			document.getElementById("between").style.display = "none";
-			document.getElementById("age2").style.display = "none";
-		};
-	});
 
 	$("#show_age_box").click(function() {
 		hide_all_filters();

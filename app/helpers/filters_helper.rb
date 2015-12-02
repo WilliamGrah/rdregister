@@ -23,18 +23,15 @@ module FiltersHelper
 					age_filter = "<"
 				when "4"
 					age_filter = "<="
-				when "5"
-					age_filter = "between"
 				else
 					age_filter = "="
 				end
 
-				filter += "age #{age_filter} #{tmp["age"]}"
-				filter += "and #{tmp["age2"]}" if tmp["age2"]
+				filter += "lower(age) #{age_filter} #{tmp["age"].downcase}"
 			when "state"
-				filter += "state = '#{tmp["state"]}'"
+				filter += "lower(state) = '#{tmp["state"].downcase}'"
 			when "job"
-				filter += "job = '#{tmp["job"]}'"
+				filter += "lower(job) = '#{tmp["job"].downcase}'"
 			end
 		end
 

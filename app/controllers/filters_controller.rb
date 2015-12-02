@@ -19,7 +19,7 @@ class FiltersController < ApplicationController
 		if query && params[:name]
 			data = {:query => query, :name => params[:name]}
 		else
-			raise "Errorrrr"
+			raise "Error"
 		end
 
 		@filter = Filter.new(data)

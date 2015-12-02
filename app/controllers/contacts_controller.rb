@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
 	def index
 		filter = nil
+
 		if params.has_key?("filter")
 			filter = FiltersHelper.prepare_query(params)
 		elsif params.has_key?("query")
