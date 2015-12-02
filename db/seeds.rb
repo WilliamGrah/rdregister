@@ -5,3 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+states = ["SP", "SC", "RJ", "RS", "MG", "PR", "PE", "PA", "RN", "AM"]
+names = ["João", "Rosane", "Pedro", "Clark", "Jonas", "Clara", "Karina", "Ana", "Rodolfo", "Miguel", "Paulo", "Luis"]
+jobs = ["programador", "design", "pedreiro", "contador", "advogado", "redator", "jornalista", "cozinheiro", "veterinario"]
+
+for i in 1..20
+	state = states[rand(0..states.count)]
+	name = names[rand(0..names.count)]
+	email = "#{name}#{i}@gmail.com"
+	age = rand(10..99)
+	job = jobs[rand(0..jobs.count)]
+
+	contacts = Contact.create({name: name, email: email, state: state, age: age, job:job})
+
+end

@@ -1,20 +1,19 @@
 class ContactsController < ApplicationController
 	def index
-		filter = []
+		filter = nil
 		if params.has_key?("filter")
-			tmp = JSON.parse(params['filter'])
-
-			filter = FilterHelper.prepare_filter(tmp)
-
-			filter = filter.join(" #{tmp["operator"]} ")
+			filter = FiltersHelper.prepare_query(params)
+		elsif params.has_key?("query")
+			filter = params["query"]
 		end
 
-		if !filter.empty?
+		if !filter.nil?
 			@contacts = Contact.where(filter)
 		else
 			@contacts = Contact.all
 		end
 
+		@filter = Filter.new
 	end
 
 	def show

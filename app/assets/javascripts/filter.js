@@ -1,5 +1,3 @@
-
-
-$(document).on "page:change", ->
-	$('#table').click ->
-		$("#hide").val("")
+$("#show_field_filter").click(function() {
+	alert("clicked");
+});

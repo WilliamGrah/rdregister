@@ -1,0 +1,27 @@
+// Place all the styles related to the Filters controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.hidden {
+	display: none;
+}
+
+.remove-filter {
+	opacity: 0.3;
+}
+
+.remove-filter:hover {
+	opacity: 0.8;
+}
+
+.toaster {
+	left: 50%;
+	transform: translate(-50%);
+	text-align: center;
+	width: 500px;
+	height: 60px;
+	position:fixed;
+	padding: 15px;
+	z-index:2;
+	display:none;
+}
