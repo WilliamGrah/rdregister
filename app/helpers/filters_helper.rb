@@ -14,20 +14,7 @@ module FiltersHelper
 		tmp.each do |key|
 			case key[0]
 			when "age"
-				case tmp["age_filter"]
-				when "1"
-					age_filter = ">"
-				when "2"
-					age_filter = ">="
-				when "3"
-					age_filter = "<"
-				when "4"
-					age_filter = "<="
-				else
-					age_filter = "="
-				end
-
-				filter += "lower(age) #{age_filter} #{tmp["age"].downcase}"
+				filter += prepare_filter_age(key[0])
 			when "state"
 				filter += "lower(state) = '#{tmp["state"].downcase}'"
 			when "job"
@@ -36,5 +23,22 @@ module FiltersHelper
 		end
 
 		return filter
+	end
+
+	def prepare_filter_age age
+		case age
+		when "1"
+			age_filter = ">"
+		when "2"
+			age_filter = ">="
+		when "3"
+			age_filter = "<"
+		when "4"
+			age_filter = "<="
+		else
+			age_filter = "="
+		end
+
+		return "lower(age) #{age_filter} #{tmp["age"].downcase}"
 	end
 end
