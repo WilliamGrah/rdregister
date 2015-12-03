@@ -1,6 +1,7 @@
 module FiltersHelper
 	def self.prepare_query params
 		tmp = []
+
 		array = JSON.parse(params['filter'])
 		array.each do |hash|
 			tmp << prepare_filter(hash)
@@ -27,18 +28,18 @@ module FiltersHelper
 
 	def self.prepare_filter_age age, age_filter
 		case age_filter
-		when "1"
+		when "1", 1
 			operator = ">"
-		when "2"
+		when "2", 2
 			operator = ">="
-		when "3"
+		when "3", 3
 			operator = "<"
-		when "4"
+		when "4", 4
 			operator = "<="
 		else
 			operator = "="
 		end
 
-		return "age #{operator} #{age.downcase}"
+		return "age #{operator} #{age}"
 	end
 end

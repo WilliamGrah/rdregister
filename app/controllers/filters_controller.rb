@@ -9,28 +9,22 @@ class FiltersController < ApplicationController
 		render plain: array.to_json
 	end
 
-	def new
-		@filter = Filter.new
-	end
-
 	def create
+		error = false
 		query = FiltersHelper.prepare_query(params)
 
 		if query && params[:name]
 			data = {:query => query, :name => params[:name]}
 		else
-			raise "Error"
+			error = true
 		end
 
 		@filter = Filter.new(data)
-		if @filter.save
+		if @filter.save && !error
 			render status: 201, plain: "Great Success"
 		else
-			render status: 400, plain: @filter.errors.full_messages
+			render status: 500, plain: @filter.errors.full_messages
 		end
-	end
-
-	def show
 	end
 
 	def destroy
@@ -38,10 +32,5 @@ class FiltersController < ApplicationController
 		@filter.destroy
 
 		render status: 200, plain: 'deleted'
-	end
-
-	private
-	def filter_params
-		params.require(:filter).permit(:query, :name)
 	end
 end
