@@ -17,9 +17,6 @@ class ContactsController < ApplicationController
 		@filter = Filter.new
 	end
 
-	def show
-	end
-
 	def new
 		@contact = Contact.new
 	end
@@ -33,7 +30,7 @@ class ContactsController < ApplicationController
 		if @contact.save
 			redirect_to contacts_path
 		else
-			render 'new'
+			render status: 422, action: 'new'
 		end
 	end
 
@@ -43,7 +40,7 @@ class ContactsController < ApplicationController
 		if @contact.update(contact_params)
 			redirect_to contacts_path
 		else
-			render 'edit'
+			render status: 422, action: 'edit'
 		end
 	end
 
@@ -52,10 +49,6 @@ class ContactsController < ApplicationController
 		@contact.destroy
 
 		redirect_to contacts_path
-	end
-
-	def filter
-		render json: {message: "Testando apenas"}
 	end
 
 	private

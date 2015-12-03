@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  email: MyString
-  age: 1
-  state: MyString
-  job: MyString
+clark:
+  name: Clark
+  email: clark@krypton.com
+  age: 50
+  state: SP
+  job: Jornalista
 
-two:
-  name: MyString
-  email: MyString
-  age: 1
-  state: MyString
-  job: MyString
+barry:
+  name: Barry Allen
+  email: barry@flash.com
+  age: 28
+  state: SC
+  job: Policial

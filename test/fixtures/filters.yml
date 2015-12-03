@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  query: MyString
+  name: Barry
+  query: 'age = 28'
 
 two:
-  name: MyString
-  query: MyString
+  name: Clark
+  query: "job = 'jornalista'"
