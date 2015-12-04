@@ -140,4 +140,89 @@ RSpec.describe ContactsController, :type => :controller do
 			expect(response).to redirect_to(contacts_path)
 		end
 	end
+
+	describe "Test some possibilities of queries" do
+		it "return the age match equals" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"MO",job:"Student")
+
+			get :index, query: 'age = 18'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact2])
+		end
+
+		it "return the age match bigger than" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"MO",job:"Student")
+			contact3 = Contact.create(name:"Bruce Wayne",email:"bruce@batman.com",age:50,state:"NY",job:"Rich Guy")
+
+			get :index, query: 'age > 28'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact3])
+		end
+
+
+		it "return the age match bigger or equals than" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"MO",job:"Student")
+			contact3 = Contact.create(name:"Bruce Wayne",email:"bruce@batman.com",age:50,state:"NY",job:"Rich Guy")
+
+			get :index, query: 'age >= 28'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact1, contact3])
+		end
+
+
+		it "return the age match lower than" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"MO",job:"Student")
+			contact3 = Contact.create(name:"Bruce Wayne",email:"bruce@batman.com",age:50,state:"NY",job:"Rich Guy")
+
+			get :index, query: 'age < 28'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact2])
+		end
+
+		it "return the age match lower or equals than" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"MO",job:"Student")
+			contact3 = Contact.create(name:"Bruce Wayne",email:"bruce@batman.com",age:50,state:"NY",job:"Rich Guy")
+
+			get :index, query: 'age <= 28'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact1, contact2])
+		end
+
+		it "returns the state match" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"DC",job:"Student")
+
+			get :index, query: 'state = "MO"'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact1])
+		end
+
+		it "returns the job match" do
+			contact1 = Contact.create(name:"Barry Allen",email:"barry@flash.com",age:28,state:"MO",job:"Police Officer")
+			contact2 = Contact.create(name:"Wally West",email:"wally@kidflash.com",age:18,state:"DC",job:"Student")
+
+			get :index, query: 'job = "Student"'
+
+			expect(response).to be_success
+			expect(response).to have_http_status(200)
+			expect(assigns(:contacts)).to match_array([contact2])
+		end
+	end
 end
