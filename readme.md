@@ -4,22 +4,33 @@
 ## Getting Started
 1. First of all, you need ruby installed in your enviroment.
 If you don't know how to install ruby, for a full list of ways to install ruby:
-      
+
         http://www.ruby-lang.org/en/downloads/
 
-2. You will need to install sqlite3, check if is already installed:
- 
-        $ sqlite3 --version
+2. You will need to install some requirements:
 
+        $ sudo apt-get install postgresql postgresql-contrib sqlite3 nodejs
 
-3. Clone the project, and enter in the project folder and run:
+3. clone the project, enter in the project folder and run:
 
         $ bundle install
 
-4. Now just put the server up:
+    if you experience anykind of error with gem 'pg' you can run bundle like this:
+
+        $   bundle install --without=production
+
+4. now you need to run the migrations:
+
+        $ rake db:migrate
+
+5. this step is optional, you can fill your db with some random data:
+
+        $ rake db:seed
+
+6. Now just put the server up:
 
         $ rails server
-   
+
 If you see something like that:
 
     => Booting WEBrick
