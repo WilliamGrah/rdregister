@@ -10,13 +10,12 @@ states = ["SP", "SC", "RJ", "RS", "MG", "PR", "PE", "PA", "RN", "AM"]
 names = ["João", "Rosane", "Pedro", "Clark", "Jonas", "Clara", "Karina", "Ana", "Rodolfo", "Miguel", "Paulo", "Luis"]
 jobs = ["programador", "design", "pedreiro", "contador", "advogado", "redator", "jornalista", "cozinheiro", "veterinario"]
 
-for i in 1..20
-	state = states[rand(0..states.count)]
-	name = names[rand(0..names.count)]
+for i in 0..20
+	state = states[rand(0..(states.count-1))]
+	name = names[rand(0..(names.count-1))]
 	email = "#{name}#{i}@gmail.com"
 	age = rand(10..99)
-	job = jobs[rand(0..jobs.count)]
+	job = jobs[rand(0..(jobs.count-1))]
 
-	contacts = Contact.create({name: name, email: email, state: state, age: age, job:job})
-
+	puts Contact.create({name: name, email: email, state: state, age: age, job:job}).inspect
 end

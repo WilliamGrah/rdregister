@@ -4,12 +4,13 @@ ruby "2.2.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 
+gem 'coveralls', :require => false
+
 group :development, :test do
 	# Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
-
 	gem 'rspec-rails', '~> 3.0'
-	gem 'simplecov', :require => false
+	gem 'simplecov', '~> 0.9', :require => false
 end
 
 group :production do

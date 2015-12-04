@@ -1,11 +1,28 @@
 <p id="success-box" class="toaster bg-success" ></p>
 <p id="danger-box" class="toaster bg-danger" ></p>
 
+<div class="jumbotron">
+	<div class="container">
+		<h1>RD Contacts</h1>
+		<p>You can access all registered users on the mailing system on this page. Try to build custom filters by clicking on the filter tab and selecting your desired criteria.</p>
+	</div>
+</div>
+<ol class="breadcrumb">
+  <li><a href="<%= root_path %>">Home</a></li>
+  <li class="active">Contacts</li>
+</ol>
+
+
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-8">
-		<h1>List of Contacts</h1>
-		<%= link_to "New contact", root_path, class: "btn btn-default" %>
-		<%= link_to "Show all results", "/contacts", class: "btn btn-default", style: "float:right;" %>
+		<div class="row">
+  			<div class="col-md-1">
+				<%= link_to "New contact", root_path, class: "btn btn-default" %>
+  			</div>
+  			<div class="col-md-1">
+				<%= link_to "Show all results", "/contacts", class: "btn btn-default" %>
+  			</div>
+  		</div>
 		<br />
 		<br />
 		<table id="hide" class="table table-striped">
@@ -31,11 +48,9 @@
 		</table> 	
   	</div>
   <div class="col-xs-6 col-md-4">
-  <h1>Filter</h1>
-
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#filter_list_tab" aria-controls="home" role="tab" data-toggle="tab">List</a></li>
-		<li role="presentation"><a href="#filter_create_tab" aria-controls="profile" role="tab" data-toggle="tab">Create</a></li>
+		<li role="presentation" class="active"><a href="#filter_list_tab" aria-controls="home" role="tab" data-toggle="tab">Filters</a></li>
+		<li role="presentation"><a href="#filter_create_tab" aria-controls="profile" role="tab" data-toggle="tab">Create filter</a></li>
 	</ul>
 
   <!-- Tab panes -->
@@ -47,31 +62,52 @@
     	<br/>
     	<%= form_tag("/filters", method: "post") do %>
 		<%= label_tag(:filter_name) %>:<br />
-		<%= text_field_tag(:filter_name, "", :id => "filter_name") %><br />
-		<%= label_tag(:operator) %>:
-		<input type="radio" name="operator", value="and" checked>E
-		<input type="radio" name="operator", value="or">OU
-		<br/>
-		<%= label_tag(:query) %>:<br />
-		<div id="filter_result">
-		</div><br />
-		<%= link_to "Idade", "#", id:"show_age_box",  class: "btn btn-default" %>
-		<%= link_to "Estado", "#", id:"show_state_box", class: "btn btn-default" %>
-		<%= link_to "Cargo", "#", id:"show_job_box", class: "btn btn-default" %>
-		<div id="age_box" class="hidden">
-			<%= label_tag(:idade) %><br />
-			<%= select_tag(:age_filter, options_for_select([["igual a",0], ["maior que",1],["maior ou igual a",2],["menor que",3], ["menor ou igual a",4]])) %>
-			<%= text_field_tag(:age, "", :id => "age") %>
-		</div>
-		<div id="state_box" class="hidden">
-			<%= label_tag(:estado) %><br />
-			<%= text_field_tag(:state, "", :id => "state") %><br />
-		</div>
-		<div id="job_box" class="hidden">
-			<%= label_tag(:cargo) %><br />
-			<%= text_field_tag(:job, "", :id => "job") %>
+		<%= text_field_tag(:filter_name, "", :id => "filter_name", :class => "form-control") %><br />
+		<%= label_tag(:operator) %>:<br />
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-primary active">
+				<input type="radio" name="operator" id="operator_and" value="and" autocomplete="off" checked> AND
+			</label>
+			<label class="btn btn-primary">
+				<input type="radio" name="operator" id="operator_or" value="or" autocomplete="off"> OR
+			</label>
 		</div>
 		<br />
+		<br/>
+
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-primary" id="show_age_box">
+				<input type="radio" name="filter_buttons"  autocomplete="off" checked> Age
+			</label>
+			<label class="btn btn-primary" id="show_state_box">
+				<input type="radio" name="filter_buttons"  autocomplete="off"> State
+			</label>
+			<label class="btn btn-primary" id="show_job_box">
+				<input type="radio" name="filter_buttons"  autocomplete="off"> Job
+			</label>
+		</div>
+		<div id="age_box" class="hidden">
+			<br />
+			<%= label_tag(:age) %>:<br />
+			<%= select_tag(:age_filter, options_for_select([["equal to",0], ["bigger than",1],["bigger or equal than",2],["lower than",3], ["lower or equals than",4]]), :class => "selectpicker") %>
+			<%= text_field_tag(:age, "", :id => "age", :class => "form-control") %>
+		</div>
+		<div id="state_box" class="hidden">
+			<br />
+			<%= label_tag(:state) %>:<br />
+			<%= text_field_tag(:state, "", :id => "state", :class => "form-control") %>
+		</div>
+		<div id="job_box" class="hidden">
+			<br />
+			<%= label_tag(:job) %>:<br />
+			<%= text_field_tag(:job, "", :id => "job", :class => "form-control") %>
+		</div>
+		<br />
+		<br />
+		<%= label_tag(:query) %>:<br />
+		<div id="filter_result">
+			<h4 id="empty_filter"><span class="label label-primary">Empty</span></h4>
+		</div><br />
 		<div id="filter_actions" class="hidden">
 			<%= link_to "Add to filter", "#", id:"add_to_filter", class: "btn btn-default" %>
 			<%= link_to "Clear the filter", "#", id:"clear_the_filter", class: "btn btn-default" %>
@@ -97,7 +133,7 @@
 	});
 
 	function timer_filter_list() {
-		filter_list_time = setInterval(reload_filter_list, 1000*6);
+		filter_list_time = setInterval(reload_filter_list, 1000*5);
 	}
 
 	function reload_filter_list() {
@@ -107,6 +143,10 @@
 			url: url,
 			success: function(data){
 				parse = JSON.parse(data)
+				if (filter_number == 0) {
+					document.getElementById("filter_list_tab").innerHTML = "<br /><span><h4>No filters yet...</h4></span>"
+				}
+
 				if (parse.length != filter_number) {
 					set_filter_list(parse);
 					filter_number = parse.length
@@ -122,6 +162,7 @@
 		var filter_list = document.getElementById("filter_list_tab")
 		filter_list.innerHTML = "<br /><table id='filter_table'>"
 		filter_table = document.getElementById("filter_table")
+		
 		for(var i = 0; i < data.length; i++) {
 			var id = data[i]['id']
 			var name = data[i]['name']
@@ -148,7 +189,7 @@
 			url: url,
   			success: function(data){
   				reload_filter_list()
-  				success_msg("Filtro removido")
+  				success_msg("Filter removed")
   			},
   			error: function(e){
   				error_msg(e.responseText)
@@ -174,7 +215,8 @@
 			url: url,
   			data: data,
   			success: function(data){
-  				success_msg("Filtro criado")
+  				success_msg("Filter created");
+  				$("#filter_name").val("");
   			},
   			error: function(e){
   				error_msg(e.responseText)
@@ -249,18 +291,24 @@
 		var state = document.getElementById("state").value;
 		var job = document.getElementById("job").value;
 
+		empty_filter = document.getElementById("empty_filter")
+		if (empty_filter) {
+			empty_filter.remove()
+		}
+
 		if (age != "") {
 			var age_filter = $("#age_filter").val()
 			var age_type = get_age_type()
 
-			document.getElementById("filter_result").innerHTML += '<h4><span class="label label-primary">Idade '+age_type+' '+age+'</span></h4>';
+
+			document.getElementById("filter_result").innerHTML += '<h4><span class="label label-primary">Age '+age_type+' '+age+'</span></h4>';
 			ruby_query.push({'age':age, 'age_filter':age_filter})
 
 		} else if (state != "") {
-			document.getElementById("filter_result").innerHTML += '<h4><span class="label label-primary">Estado = '+state+'</span></h4>';
+			document.getElementById("filter_result").innerHTML += '<h4><span class="label label-primary">State = '+state+'</span></h4>';
 			ruby_query.push({'state':state})
 		} else if (job != "") {
-			document.getElementById("filter_result").innerHTML += '<h4><span class="label label-primary">Cargo = '+job+'</span></h4>';
+			document.getElementById("filter_result").innerHTML += '<h4><span class="label label-primary">Job = '+job+'</span></h4>';
 			ruby_query.push({'job':job})
 		}
 	}
@@ -269,19 +317,19 @@
 		var age_filter = $("#age_filter").val();
 		switch(age_filter) {
 			case '0':
-				age_type = "igual a"
+				age_type = "equals to"
 				break;
 			case '1':
-				age_type = "maior que"
+				age_type = "bigger than"
 				break;
 			case '2':
-				age_type = "maior ou igual a"
+				age_type = "bigger or equals than"
 				break;
 			case '3':
-				age_type = "menor que"
+				age_type = "lower than"
 				break;
 			case '4':
-				age_type = "menor ou igual a"
+				age_type = "lower or equals than"
 				break;
 		};
 		return age_type;
@@ -302,6 +350,12 @@
 		document.getElementById("age").value = "";
 		document.getElementById("state").value = "";
 		document.getElementById("job").value = "";
-		document.getElementById("filter_result").innerHTML = ""
+		document.getElementById("filter_result").innerHTML = "<h4 id='empty_filter'><span class='label label-primary'>Empty</span></h4>";
 	}
+
+	$("#filter_list_tab").click(function() {
+		reload_filter_list();
+		a = document.getElementById("filter_list_tab").innerHTML;
+		console.log(a)
+	});
 </script>

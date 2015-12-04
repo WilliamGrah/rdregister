@@ -14,3 +14,20 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+function success_msg(msg) {
+	document.getElementById("success-box").innerHTML = "<span>"+msg+"!</span>"
+	jQuery("#success-box").fadeIn('slow');
+	jQuery("#success-box").delay(2000).fadeOut('slow');
+};
+
+function error_msg(msg) {
+	document.getElementById("danger-box").innerHTML = ""
+	messages = JSON.parse(msg)
+	for (var i=0; i < messages.length; i++) {
+		document.getElementById("danger-box").innerHTML += "<span>"+messages[i]+"</span><br />"
+	}
+	jQuery("#danger-box").fadeIn('slow');
+	jQuery("#danger-box").delay(3000).fadeOut('slow');
+};
