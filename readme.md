@@ -1,4 +1,5 @@
 # RDregister
+[![Coverage Status](https://coveralls.io/repos/WilliamGrah/rdregister/badge.svg?branch=master&service=github)](https://coveralls.io/github/WilliamGrah/rdregister?branch=master)
 
 ## Getting Started
 1. First of all, you need ruby installed in your enviroment.
@@ -10,7 +11,8 @@ If you don't know how to install ruby, for a full list of ways to install ruby:
  
         $ sqlite3 --version
 
-3. clone the project, and enter in the project folder and run:
+
+3. Clone the project, and enter in the project folder and run:
 
         $ bundle install
 
